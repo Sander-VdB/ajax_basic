@@ -146,11 +146,11 @@ public class MySQLKlantDAO implements KlantDAO {
 
 	@Override
 	public boolean deleteKlant(Klant klant) {
-		final String SQL_INSERT = "DELETE FROM Klant WHERE Naam=? AND BTW=?";
+		final String SQL_INSERT = "DELETE FROM Klant WHERE Id=?";
 		try (Connection connection = this.createConnection();
 				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
-			statementInsert.setString(1, klant.getNaam());
-			statementInsert.setString(2, klant.getBtw());
+			connection.setAutoCommit(false);
+			statementInsert.setInt(1, klant.getId());
 
 			if (statementInsert.executeUpdate() == 1) {
 				connection.commit();

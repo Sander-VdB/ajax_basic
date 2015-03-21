@@ -46,20 +46,31 @@ public class MySQLKlantDAOTest {
 		testKlant.setNaam(TESTNAME);
 		testKlant.setBtw(TESTBTW);
 		assertTrue(dao.insertKlant(testKlant));
+		dao.deleteKlant(testKlant);
 	}
 
 	@Test
 	public void testUpdateKlant() {
 		MySQLKlantDAO dao = new MySQLKlantDAO();
-		Klant testKlant = dao.findByName(TESTNAME).get(0);
+		Klant newKlant = new Klant();
+		newKlant.setNaam(TESTNAME + "update");
+		newKlant.setBtw(TESTBTW);
+		dao.insertKlant(newKlant);
+		Klant testKlant = dao.findByName(TESTNAME + "update").get(0);
 		testKlant.setBtw(TESTBTW1);
 		dao.updateKlant(testKlant);
-		assertTrue(dao.findByName(TESTNAME).get(0).getBtw().equals(TESTBTW1));
+		testKlant = dao.findByName(TESTNAME + "update").get(0);
+		assertTrue(testKlant.getBtw().equals(TESTBTW1));
+		dao.deleteKlant(testKlant);
 	}
 
 	@Test
 	public void testDeleteKlant() {
 		MySQLKlantDAO dao = new MySQLKlantDAO();
+		Klant newKlant = new Klant();
+		newKlant.setNaam(TESTNAME + "update");
+		newKlant.setBtw(TESTBTW);
+		dao.insertKlant(newKlant);
 		Klant testKlant = dao.findByName(TESTNAME).get(0);
 		assertTrue(dao.deleteKlant(testKlant));
 	}
