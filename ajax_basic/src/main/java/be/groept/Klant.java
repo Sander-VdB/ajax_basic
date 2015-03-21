@@ -13,6 +13,9 @@ public class Klant {
 	private String telefoonnr;
 	private String email;
 
+	public Klant() {
+	}
+
 	public Klant(String naam) {
 		this.setNaam(naam);
 		this.setBtw("");
@@ -132,4 +135,18 @@ public class Klant {
 		this.email = email;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof Klant) {
+			Klant klantobject = (Klant) object;
+			if (klantobject.getId() == this.getId() && klantobject.getNaam().equals(this.getNaam())
+					&& klantobject.getBtw().equals(this.getBtw())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }
