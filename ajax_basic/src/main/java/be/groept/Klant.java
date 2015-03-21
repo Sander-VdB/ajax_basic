@@ -14,22 +14,12 @@ public class Klant {
 	private String email;
 
 	public Klant() {
-	}
-
-	public Klant(String naam) {
-		this.setNaam(naam);
-		this.setBtw("");
-		this.setStraat("");
-		this.setNr("");
-		this.setPostcode("");
-		this.setWoonplaats("");
-		this.setLand("");
-		this.setTelefoonnr("");
-		this.setEmail("");
+		this.setId(-1);
 	}
 
 	public Klant(String naam, String btw, String straat, String nr, String postcode, String woonplaats, String land, String tel,
 			String email) {
+		this.setId(-1);
 		this.setNaam(naam);
 		this.setBtw(btw);
 		this.setStraat(straat);

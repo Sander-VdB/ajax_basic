@@ -101,19 +101,66 @@ public class MySQLKlantDAO implements KlantDAO {
 
 	@Override
 	public boolean insertKlant(Klant klant) {
-		// TODO Auto-generated method stub
+		final String SQL_INSERT = "INSERT INTO Klant (Naam, BTW) VALUES (?,?)";
+		try (Connection connection = this.createConnection();
+				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
+			connection.setAutoCommit(false);
+			statementInsert.setString(1, klant.getNaam());
+			statementInsert.setString(2, klant.getBtw());
+
+			if (statementInsert.executeUpdate() == 1) {
+				connection.commit();
+				return true;
+			} else {
+				connection.rollback();
+			}
+
+		} catch (SQLException ex) {
+			System.console().printf(ex.getMessage());
+		}
 		return false;
 	}
 
 	@Override
 	public boolean updateKlant(Klant klant) {
-		// TODO Auto-generated method stub
+		final String SQL_UPDATE = "UPDATE Klant SET Naam=?, BTW=? WHERE Id=?";
+		try (Connection connection = this.createConnection();
+				PreparedStatement statementUpdate = connection.prepareStatement(SQL_UPDATE)) {
+			connection.setAutoCommit(false);
+			statementUpdate.setString(1, klant.getNaam());
+			statementUpdate.setString(2, klant.getBtw());
+			statementUpdate.setInt(3, klant.getId());
+
+			if (statementUpdate.executeUpdate() == 1) {
+				connection.commit();
+				return true;
+			} else {
+				connection.rollback();
+			}
+
+		} catch (SQLException ex) {
+			System.console().printf(ex.getMessage());
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteKlant(Klant klant) {
-		// TODO Auto-generated method stub
+		final String SQL_INSERT = "DELETE FROM Klant WHERE Naam=? AND BTW=?";
+		try (Connection connection = this.createConnection();
+				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
+			statementInsert.setString(1, klant.getNaam());
+			statementInsert.setString(2, klant.getBtw());
+
+			if (statementInsert.executeUpdate() == 1) {
+				connection.commit();
+				return true;
+			} else {
+				connection.rollback();
+			}
+		} catch (SQLException ex) {
+			System.console().printf(ex.getMessage());
+		}
 		return false;
 	}
 
