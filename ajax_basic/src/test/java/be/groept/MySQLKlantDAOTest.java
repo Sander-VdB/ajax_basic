@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class MySQLKlantDAOTest {
-	private final String TESTNAME = "JOSKE01";
+	private final String TESTNAME = "testCustomer";
 	private final String TESTBTW = "123456789";
 	private final String TESTBTW1 = "0000001234";
 
@@ -43,9 +43,10 @@ public class MySQLKlantDAOTest {
 	public void testInsertKlant() {
 		MySQLKlantDAO dao = new MySQLKlantDAO();
 		Klant testKlant = new Klant();
-		testKlant.setNaam(TESTNAME);
+		testKlant.setNaam(TESTNAME + "insert");
 		testKlant.setBtw(TESTBTW);
 		assertTrue(dao.insertKlant(testKlant));
+		testKlant = dao.findByName(TESTNAME + "insert").get(0);
 		dao.deleteKlant(testKlant);
 	}
 
@@ -68,10 +69,10 @@ public class MySQLKlantDAOTest {
 	public void testDeleteKlant() {
 		MySQLKlantDAO dao = new MySQLKlantDAO();
 		Klant newKlant = new Klant();
-		newKlant.setNaam(TESTNAME + "update");
+		newKlant.setNaam(TESTNAME + "delete");
 		newKlant.setBtw(TESTBTW);
 		dao.insertKlant(newKlant);
-		Klant testKlant = dao.findByName(TESTNAME).get(0);
+		Klant testKlant = dao.findByName(TESTNAME + "delete").get(0);
 		assertTrue(dao.deleteKlant(testKlant));
 	}
 
