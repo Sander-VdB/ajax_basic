@@ -11,34 +11,34 @@ public class KlantDAOTest {
 	private final String TESTNAME = "testCustomer";
 	private final String TESTBTW = "123456789";
 	private final String TESTBTW1 = "0000001234";
+	MySQLKlantDAO dao = new MySQLKlantDAO();
 
 	@Test
 	public void testMySQLKlantDAO() {
-		assertNotNull(new MySQLKlantDAO());
+		assertNotNull(dao);
 	}
 
 	@Test
 	public void testFindAll() {
-		assertNotNull(new MySQLKlantDAO().findAll());
+		assertNotNull(dao.findAll());
 	}
 
 	@Test
 	public void testFindById() {
-		Klant eersteklant = new MySQLKlantDAO().findAll().get(0);
-		Klant gevonden = new MySQLKlantDAO().findById(eersteklant.getId()).get(0);
+		Klant eersteklant = dao.findAll().get(0);
+		Klant gevonden = dao.findById(eersteklant.getId()).get(0);
 		assertTrue(eersteklant.equals(gevonden));
 	}
 
 	@Test
 	public void testFindByName() {
-		Klant eersteklant = new MySQLKlantDAO().findAll().get(0);
-		Klant gevonden = new MySQLKlantDAO().findByName(eersteklant.getNaam()).get(0);
+		Klant eersteklant = dao.findAll().get(0);
+		Klant gevonden = dao.findByName(eersteklant.getNaam()).get(0);
 		assertTrue(eersteklant.equals(gevonden));
 	}
 
 	@Test
 	public void testInsertKlant() {
-		MySQLKlantDAO dao = new MySQLKlantDAO();
 		Klant testKlant = new Klant();
 		testKlant.setNaam(TESTNAME + "insert");
 		testKlant.setBtw(TESTBTW);
@@ -49,7 +49,6 @@ public class KlantDAOTest {
 
 	@Test
 	public void testUpdateKlant() {
-		MySQLKlantDAO dao = new MySQLKlantDAO();
 		Klant newKlant = new Klant();
 		newKlant.setNaam(TESTNAME + "update");
 		newKlant.setBtw(TESTBTW);
@@ -64,7 +63,6 @@ public class KlantDAOTest {
 
 	@Test
 	public void testDeleteKlant() {
-		MySQLKlantDAO dao = new MySQLKlantDAO();
 		Klant newKlant = new Klant();
 		newKlant.setNaam(TESTNAME + "delete");
 		newKlant.setBtw(TESTBTW);
