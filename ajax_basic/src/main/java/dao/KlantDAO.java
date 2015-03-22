@@ -1,6 +1,8 @@
-package be.groept;
+package dao;
 
 import java.util.List;
+
+import bean.Klant;
 
 public interface KlantDAO {
 	List<Klant> findAll();

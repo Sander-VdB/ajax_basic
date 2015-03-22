@@ -1,9 +1,11 @@
-package be.groept;
+package dao;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import bean.Klant;
 
 public class MySQLKlantDAOTest {
 	private final String TESTNAME = "testCustomer";
@@ -76,13 +78,4 @@ public class MySQLKlantDAOTest {
 		assertTrue(dao.deleteKlant(testKlant));
 	}
 
-	@Test
-	public void testEquals() {
-		// een klant is gelijk aan zichzelf
-		Klant klant = new Klant();
-		klant.setId(8);
-		klant.setNaam("jos");
-		klant.setBtw("123456789");
-		assertTrue(klant.equals(klant));
-	}
 }
