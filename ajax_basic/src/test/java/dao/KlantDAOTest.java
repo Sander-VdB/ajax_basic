@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import bean.Klant;
 
-public class MySQLKlantDAOTest {
+public class KlantDAOTest {
 	private final String TESTNAME = "testCustomer";
 	private final String TESTBTW = "123456789";
 	private final String TESTBTW1 = "0000001234";
@@ -15,11 +15,6 @@ public class MySQLKlantDAOTest {
 	@Test
 	public void testMySQLKlantDAO() {
 		assertNotNull(new MySQLKlantDAO());
-	}
-
-	@Test
-	public void testCreateConnection() {
-		assertNotNull(MySQLKlantDAO.createConnection());
 	}
 
 	@Test
