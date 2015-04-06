@@ -11,7 +11,11 @@ public interface ContactDAO {
 
 	List<Contact> findByValue(String value);
 
-	boolean insertContact(Contact contact);
+	/**
+	 * @param contact
+	 * @return id of inserted contact
+	 */
+	int insertContact(Contact contact);
 
 	boolean updateContact(Contact contact);
 

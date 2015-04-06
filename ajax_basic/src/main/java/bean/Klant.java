@@ -7,9 +7,20 @@ public class Klant {
 	private String btw;
 	private String telefoonnr;
 	private String email;
+	private Adres facturatieadres;
+	private Adres afleveradres;
 
 	public Klant() {
 		this.setId(-1);
+		this.facturatieadres = new Adres();
+		this.afleveradres = new Adres();
+	}
+
+	public Klant(String naam) {
+		this.setId(-1);
+		this.setFacturatieadres(new Adres());
+		this.setAfleveradres(new Adres());
+		this.setNaam(naam);
 	}
 
 	public Klant(Klant _klant) {
@@ -58,12 +69,27 @@ public class Klant {
 		this.email = email;
 	}
 
+	public Adres getFacturatieadres() {
+		return facturatieadres;
+	}
+
+	public void setFacturatieadres(Adres facturatieadresId) {
+		this.facturatieadres = facturatieadresId;
+	}
+
+	public Adres getAfleveradres() {
+		return afleveradres;
+	}
+
+	public void setAfleveradres(Adres afleveradresId) {
+		this.afleveradres = afleveradresId;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof Klant) {
 			Klant klantobject = (Klant) object;
-			if (klantobject.getId() == this.getId() && klantobject.getNaam().equals(this.getNaam())
-					&& klantobject.getBtw().equals(this.getBtw())) {
+			if (klantobject.getNaam().equals(this.getNaam()) && klantobject.getBtw().equals(this.getBtw())) {
 				return true;
 			} else {
 				return false;
