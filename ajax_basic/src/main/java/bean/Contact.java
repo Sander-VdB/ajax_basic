@@ -1,17 +1,17 @@
 package bean;
 
-import java.util.HashMap;
-
-import util.ContactTypeNotFoundException;
 import dao.DAOFactory;
 
 public class Contact {
 
-	private static HashMap<Integer, String> contactTypes = new HashMap<Integer, String>();
+	// private static HashMap<Integer, String> contactTypes = new HashMap<Integer, String>();
+	public static enum ContactType {
+		GSM, VAST, EMAIL
+	}
 
 	private int id;
 	private String contact;
-	private int contactType;
+	private ContactType contactType;
 	private Klant klant;
 
 	public Contact() {
@@ -19,29 +19,17 @@ public class Contact {
 		this.setId(-1);
 	}
 
-	public Contact(Contact _contact) throws ContactTypeNotFoundException {
-		// TODO: exception when contacttype not available in contacttypes hashmap
+	public Contact(Contact _contact) {
 		this.setContact(_contact.getContact());
 		this.setContactType(_contact.getContactType());
 		this.setId(-1);
 	}
 
-	public static HashMap<Integer, String> getContactTypes() {
-		return contactTypes;
-	}
-
-	// public static void addContactType(String contactType) {
-	// if (!Contact.contactTypes.containsValue(contactType)) {
-	// Contact.contactTypes.put(Contact.contactTypes.size() + 1, contactType);
-	// // DAOFactory.getDAOFactory(DAOFactory.MYSQL).getContactDAO().updateContactTypes();
-	// }
-	// }
-
 	public Klant getKlant() {
 		return klant;
 	}
 
-	public void setKlant(Klant klant) {
+	public void setKlantId(Klant klant) {
 		this.klant = klant;
 	}
 
@@ -53,16 +41,12 @@ public class Contact {
 		this.contact = contact;
 	}
 
-	public int getContactType() {
+	public ContactType getContactType() {
 		return contactType;
 	}
 
-	public void setContactType(int contactType) throws ContactTypeNotFoundException {
-		if (this.getContactTypes().containsKey(contactType)) {
-			this.contactType = contactType;
-		} else {
-			throw new ContactTypeNotFoundException("specified contacttype not available");
-		}
+	public void setContactType(ContactType contactType) {
+		this.contactType = contactType;
 	}
 
 	public int getId() {
