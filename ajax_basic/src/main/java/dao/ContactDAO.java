@@ -16,6 +16,4 @@ public interface ContactDAO {
 	boolean updateContact(Contact contact);
 
 	boolean deleteContact(Contact contact);
-
-	boolean updateLocalContactTypes();
 }

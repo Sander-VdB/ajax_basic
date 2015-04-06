@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.ContactTypeNotFoundException;
 import bean.Contact;
 
 public class MySQLContactDAO implements ContactDAO {
@@ -28,14 +27,13 @@ public class MySQLContactDAO implements ContactDAO {
 				Contact contact = new Contact();
 				contact.setId(set.getInt("Id"));
 				contact.setContact(set.getString("contact"));
-				contact.setContactType(set.getInt("CT_id"));
+				contact.setContactType(Contact.ContactType.values()[set.getInt("CT_id")]);
 
 				contactList.add(contact);
 			}
-			updateLocalContactTypes();
 
 			return contactList;
-		} catch (SQLException | ContactTypeNotFoundException ex) {
+		} catch (SQLException ex) {
 			System.console().printf(ex.getMessage());
 		}
 		return null;
@@ -54,13 +52,12 @@ public class MySQLContactDAO implements ContactDAO {
 				Contact contact = new Contact();
 				contact.setId(set.getInt("Id"));
 				contact.setContact(set.getString("contact"));
-				contact.setContactType(set.getInt("CT_id"));
+				contact.setContactType(Contact.ContactType.values()[set.getInt("CT_id")]);
 
 				contactList.add(contact);
 			}
-			updateLocalContactTypes();
 			return contactList;
-		} catch (SQLException | ContactTypeNotFoundException ex) {
+		} catch (SQLException ex) {
 			System.console().printf(ex.getMessage());
 		}
 		return null;
@@ -79,13 +76,12 @@ public class MySQLContactDAO implements ContactDAO {
 				Contact contact = new Contact();
 				contact.setId(set.getInt("Id"));
 				contact.setContact(set.getString("contact"));
-				contact.setContactType(set.getInt("CT_id"));
+				contact.setContactType(Contact.ContactType.values()[set.getInt("CT_id")]);
 
 				contactList.add(contact);
 			}
-			updateLocalContactTypes();
 			return contactList;
-		} catch (SQLException | ContactTypeNotFoundException ex) {
+		} catch (SQLException ex) {
 			System.console().printf(ex.getMessage());
 		}
 		return null;
@@ -98,7 +94,7 @@ public class MySQLContactDAO implements ContactDAO {
 				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
 			connection.setAutoCommit(false);
 			statementInsert.setString(1, contact.getContact());
-			statementInsert.setInt(2, contact.getContactType());
+			statementInsert.setInt(2, contact.getContactType().ordinal());
 			statementInsert.setInt(3, contact.getKlant().getId());
 
 			if (statementInsert.executeUpdate() == 1) {
@@ -121,7 +117,7 @@ public class MySQLContactDAO implements ContactDAO {
 				PreparedStatement statementUpdate = connection.prepareStatement(SQL_UPDATE)) {
 			connection.setAutoCommit(false);
 			statementUpdate.setString(1, contact.getContact());
-			statementUpdate.setInt(2, contact.getContactType());
+			statementUpdate.setInt(2, contact.getContactType().ordinal());
 			statementUpdate.setInt(3, contact.getId());
 
 			if (statementUpdate.executeUpdate() == 1) {
@@ -156,23 +152,4 @@ public class MySQLContactDAO implements ContactDAO {
 		}
 		return false;
 	}
-
-	@Override
-	public boolean updateLocalContactTypes() {
-		final String SQL_SELECT = "SELECT Id,Type FROM ContactType";
-		try (Connection connection = MySQLDAOFactory.createConnection();
-				PreparedStatement statementSelect = connection.prepareStatement(SQL_SELECT)) {
-			ResultSet set = statementSelect.executeQuery();
-
-			while (set.next()) {
-				if (!Contact.getContactTypes().containsKey(set.getInt("Id"))) {
-					Contact.getContactTypes().put(set.getInt("Id"), set.getString("Type"));
-				}
-			}
-			return true;
-		} catch (SQLException ex) {
-			System.console().printf(ex.getMessage());
-		}
-		return false;
-	};
 }
