@@ -11,13 +11,7 @@ public interface KlantDAO {
 
 	List<Klant> findByName(String name);
 
-	// List<Klant> findByName(String name, boolean ignoreCase);
-
-	/**
-	 * @param klant
-	 * @return id of inserted customer
-	 */
-	int insertKlant(Klant klant);
+	boolean insertKlant(Klant klant);
 
 	boolean updateKlant(Klant klant);
 

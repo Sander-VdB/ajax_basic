@@ -85,8 +85,9 @@ public class Adres {
 		if (object instanceof Adres) {
 			Adres classobject = (Adres) object;
 
-			return (classobject.getLand().equals(this.getLand()) && classobject.getNr().equals(this.getNr())
-					&& classobject.getPostcode().equals(this.getPostcode()) && classobject.getStraat().equals(this.getStraat())
+			return (classobject.getId() == this.getId() && classobject.getLand().equals(this.getLand())
+					&& classobject.getNr().equals(this.getNr()) && classobject.getPostcode().equals(this.getPostcode())
+					&& classobject.getStraat().equals(this.getStraat())
 					&& classobject.getWoonplaats().equals(this.getWoonplaats()) && classobject.isActief() == this.isActief());
 		} else {
 			return false;

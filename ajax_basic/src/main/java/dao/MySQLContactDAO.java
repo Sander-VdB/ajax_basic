@@ -9,8 +9,6 @@ import java.util.List;
 
 import bean.Contact;
 
-import com.mysql.jdbc.Statement;
-
 public class MySQLContactDAO implements ContactDAO {
 
 	public MySQLContactDAO() {
@@ -90,10 +88,10 @@ public class MySQLContactDAO implements ContactDAO {
 	}
 
 	@Override
-	public int insertContact(Contact contact) {
+	public boolean insertContact(Contact contact) {
 		final String SQL_INSERT = "INSERT INTO Contact (contact,CT_id,K_id) " + "VALUES (?,?,?)";
 		try (Connection connection = MySQLDAOFactory.createConnection();
-				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
 			connection.setAutoCommit(false);
 			statementInsert.setString(1, contact.getContact());
 			statementInsert.setInt(2, contact.getContactType().ordinal());
@@ -101,10 +99,7 @@ public class MySQLContactDAO implements ContactDAO {
 
 			if (statementInsert.executeUpdate() == 1) {
 				connection.commit();
-				ResultSet keys = statementInsert.getGeneratedKeys();
-				if (keys.next()) {
-					return keys.getInt(1);
-				}
+				return true;
 			} else {
 				connection.rollback();
 			}
@@ -112,7 +107,7 @@ public class MySQLContactDAO implements ContactDAO {
 		} catch (SQLException ex) {
 			System.console().printf(ex.getMessage());
 		}
-		return -1;
+		return false;
 	}
 
 	@Override

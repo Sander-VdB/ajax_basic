@@ -1,5 +1,7 @@
 package bean;
 
+import dao.DAOFactory;
+
 public class Contact {
 
 	// private static HashMap<Integer, String> contactTypes = new HashMap<Integer, String>();
@@ -13,8 +15,8 @@ public class Contact {
 	private Klant klant;
 
 	public Contact() {
+		DAOFactory.getDAOFactory(DAOFactory.MYSQL).getContactDAO().updateLocalContactTypes();
 		this.setId(-1);
-		this.klant = new Klant();
 	}
 
 	public Contact(Contact _contact) {
@@ -27,7 +29,7 @@ public class Contact {
 		return klant;
 	}
 
-	public void setKlant(Klant klant) {
+	public void setKlantId(Klant klant) {
 		this.klant = klant;
 	}
 
@@ -59,7 +61,8 @@ public class Contact {
 	public boolean equals(Object object) {
 		if (object instanceof Contact) {
 			Contact classobject = (Contact) object;
-			return classobject.getContact().equals(this.getContact()) && classobject.getContactType() == this.getContactType();
+			return classobject.getId() == this.getId() && classobject.getContact().equals(this.getContact())
+					&& classobject.getContactType() == this.getContactType();
 		} else {
 			return false;
 		}

@@ -9,8 +9,6 @@ import java.util.List;
 
 import bean.Adres;
 
-import com.mysql.jdbc.Statement;
-
 public class MySQLAdresDAO implements AdresDAO {
 
 	public MySQLAdresDAO() {
@@ -101,11 +99,10 @@ public class MySQLAdresDAO implements AdresDAO {
 	}
 
 	@Override
-	public int insertAdres(Adres address) {
-		// TODO immediately return used id?
+	public boolean insertAdres(Adres address) {
 		final String SQL_INSERT = "INSERT INTO Adres (Straat, Nr, Postcode, Woonplaats, Land, Actief) " + "VALUES (?,?,?,?,?,?)";
 		try (Connection connection = MySQLDAOFactory.createConnection();
-				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement statementInsert = connection.prepareStatement(SQL_INSERT)) {
 			connection.setAutoCommit(false);
 			statementInsert.setString(1, address.getStraat());
 			statementInsert.setString(2, address.getNr());
@@ -116,10 +113,7 @@ public class MySQLAdresDAO implements AdresDAO {
 
 			if (statementInsert.executeUpdate() == 1) {
 				connection.commit();
-				ResultSet keys = statementInsert.getGeneratedKeys();
-				if (keys.next()) {
-					return keys.getInt(1);
-				}
+				return true;
 			} else {
 				connection.rollback();
 			}
@@ -127,7 +121,7 @@ public class MySQLAdresDAO implements AdresDAO {
 		} catch (SQLException ex) {
 			System.console().printf(ex.getMessage());
 		}
-		return -1;
+		return false;
 	}
 
 	@Override

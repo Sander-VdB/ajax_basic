@@ -11,11 +11,7 @@ public interface AdresDAO {
 
 	List<Adres> findByStraat(String straat);
 
-	/**
-	 * @param adres
-	 * @return id of inserted address
-	 */
-	int insertAdres(Adres adres);
+	boolean insertAdres(Adres adres);
 
 	boolean updateAdres(Adres adres);
 
