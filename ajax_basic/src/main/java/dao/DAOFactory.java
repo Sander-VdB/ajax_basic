@@ -9,6 +9,8 @@ public abstract class DAOFactory {
 
 	public abstract ContactDAO getContactDAO();
 
+	public abstract OpdrachtDAO getOpdrachtDAO();
+
 	public static DAOFactory getDAOFactory(int choice) {
 		switch (choice) {
 		case MYSQL:

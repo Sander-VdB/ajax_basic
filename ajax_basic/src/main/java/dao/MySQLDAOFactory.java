@@ -33,4 +33,9 @@ public class MySQLDAOFactory extends DAOFactory {
 	public ContactDAO getContactDAO() {
 		return new MySQLContactDAO();
 	}
+
+	@Override
+	public OpdrachtDAO getOpdrachtDAO() {
+		return new MySQLOpdrachtDAO();
+	}
 }
